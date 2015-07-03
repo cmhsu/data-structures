@@ -4,7 +4,7 @@ var Queue = function(){
   // Use an object with numeric keys to store values
   var storage = {};
   var length = 0;
-  var count = 0; 
+  var shiftRightBy = 0;
   // Implement the methods below
 
   someInstance.enqueue = function(value){
@@ -13,15 +13,15 @@ var Queue = function(){
   };
 
   someInstance.dequeue = function(){
-    if(length - count >= 1) {
-      count++;
+    if (length > shiftRightBy) {
+      shiftRightBy++;
     }
-    return storage[count - 1];
+    return storage[shiftRightBy - 1]; //returns 'a' a second time, instead of undefined. for queue.enqueue('a'); queue.dequeue(); queue.dequeue();
 
   };
 
   someInstance.size = function(){
-    return length - count;
+    return length - shiftRightBy;
   };
 
   return someInstance;

@@ -18,10 +18,10 @@ HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   if(this._storage[i] !== null) {
   	for (var j = 0; j < this._storage[i].length; j++) {
-  	  	if (this._storage[i][j][0] === k) {
-  	  		return this._storage[i][j][1];
-  	  	}
-  	  }
+      if (this._storage[i][j][0] === k) {
+        return this._storage[i][j][1];
+      }
+    }
   } else {
   	return null;
   }

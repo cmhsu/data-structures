@@ -17,7 +17,7 @@ queueMethods.enqueue = function(value) {
 };
 
 queueMethods.dequeue = function() {
-	if (this.length - this.beginning >= 1) {
+	if (this.length > this.beginning) {
 		this.beginning += 1;
 	}
 	return this[this.beginning - 1];
