@@ -14,14 +14,10 @@ var DoublyLinkedList = function(){
       list.head = item;
       list.tail = item;
       return;
-    } 
-
-    else {
-      item.prev = list.tail;
     }
 
+    item.prev = list.head;
     list.tail.next = item;
-
     list.tail = item; 
   };  
 
@@ -32,15 +28,13 @@ var DoublyLinkedList = function(){
       prev: null
     };
 
-    if (list.tail !== null) {
-      item.next = list.head;
-    }
-
     if (list.head === null) {
       list.head = item;
       list.tail = item;
-    } 
+      return;
+    }
 
+    item.next = list.head;
     list.head.prev = item;
     list.head = item; 
   }; 
@@ -50,39 +44,35 @@ var DoublyLinkedList = function(){
       return null;
     }
 
-    var result = list.head;
+    var result = list.head.value;
+
     if (list.head.next === null) {
       list.tail = null;
+      list.head = null;
+      return result;
     }
     
     list.head = list.head.next;
-    
-    if (list.head !== null) {
-      list.head.prev = null;
-    }
-
-    return result.value;
+    list.head.prev = null;
+    return result;
   };
 
   list.removeTail = function(){
-    var result = list.tail;
-
     if (list.tail === null) {
       return null;
     }
 
+    var result = list.tail.value;
+
     if (list.tail.prev === null) {
       list.tail = null;
       list.head = null;
+      return result;
     }
 
-    
-    if (list.tail !== null) {
-      list.tail = list.tail.prev;
-      list.tail.next = null;
-    }
-
-    return result.value;
+    list.tail = list.tail.prev;
+    list.tail.next = null;
+    return result;
   };
 
   list.contains = function(target){
