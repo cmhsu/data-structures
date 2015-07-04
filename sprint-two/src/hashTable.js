@@ -11,15 +11,15 @@ HashTable.prototype.insert = function(k, v){
     return;
   }  
 
-  var kIndex = -1;
+  var shouldOverwrite = false;
 
   for (var j = 0; j < this._storage.get(i).length; j++) {
     if (this._storage.get(i)[j][0] === k) {
-      kIndex = j;
+      shouldOverwrite = true;
     }
   }
 
-  if (kIndex > -1) {
+  if (shouldOverwrite === true) {
     this._storage.get(i)[j][1] = v;
   } else {
   	this._storage.get(i).push([k, v]);
