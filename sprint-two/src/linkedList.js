@@ -12,19 +12,28 @@ var LinkedList = function(){
     if (list.head === null) {
       list.head = item;
       list.tail = item;
+      return;
     } 
 
     list.tail.next = item;
     list.tail = item; 
   };
 
-  list.removeHead = function(){
-    var result = list.head;
-    if (list.head.next === null) {
-      list.tail ===null;
+  list.removeHead = function() {
+    if (list.head === null) {
+      return null;
     }
+
+    var result = list.head.value;
+
+    if (list.head.next === null) {
+      list.tail = null;
+      list.head = null;
+      return result;
+    }
+
     list.head = list.head.next;
-    return result.value;
+    return result;
   };
 
   list.contains = function(target){
