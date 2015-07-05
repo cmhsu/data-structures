@@ -14,16 +14,16 @@ var stackMethods = {};
 stackMethods.push = function(value) {
 	this[this.length] = value;
 	this.length++;
-}
+};
 
 stackMethods.pop = function() {
 	if (this.length >= 1) {
 		this.length--;
 	}
 	return this[this.length];
-}
+};
 
 stackMethods.size =function() {
 	return this.length;
-}
+};
 

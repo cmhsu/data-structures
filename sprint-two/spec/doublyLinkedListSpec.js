@@ -82,13 +82,18 @@ describe('doublyLinkedList', function() {
 
   it('should not contain a value that was removed from tail', function(){
     doublyLinkedList.addToTail(4);
-    console.log(doublyLinkedList.head);
     doublyLinkedList.addToTail(5);
+    doublyLinkedList.addToHead(3);
     expect(doublyLinkedList.removeTail()).to.equal(5);
     expect(doublyLinkedList.contains(5)).to.equal(false);
-    expect(doublyLinkedList.removeTail()).to.equal(4);
-    expect(doublyLinkedList.head).to.equal(null);
+    expect(doublyLinkedList.removeHead()).to.equal(3);
+    expect(doublyLinkedList.head.value).to.equal(4);
+    expect(doublyLinkedList.tail.value).to.equal(4);
+    expect(doublyLinkedList.contains(4)).to.equal(true);
+    doublyLinkedList.removeTail();
     expect(doublyLinkedList.tail).to.equal(null);
+    expect(doublyLinkedList.head).to.equal(null);
+
   });
 
   // add more tests here to test the functionality of doublyLinkedList
