@@ -73,6 +73,7 @@ var DoublyLinkedList = function(){
     list.tail = list.tail.prev;
     list.tail.next = null;
     return result;
+
   };
 
   list.contains = function(target){
