@@ -4,19 +4,17 @@ var LinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(value){
-    var item = { 
-      value: value,
-      next: null
-    };
+    var newTail = Node(value);
 
-    if (list.head === null) {
-      list.head = item;
-      list.tail = item;
-      return;
+    if (!list.head) {
+      list.head = newTail;
     } 
 
-    list.tail.next = item;
-    list.tail = item; 
+    if (list.tail) {
+      list.tail.next = newTail;
+    }
+
+    list.tail = newTail;
   };
 
   list.removeHead = function() {
@@ -24,16 +22,9 @@ var LinkedList = function(){
       return null;
     }
 
-    var result = list.head.value;
-
-    if (list.head.next === null) {
-      list.tail = null;
-      list.head = null;
-      return result;
-    }
-
-    list.head = list.head.next;
-    return result;
+    var currentHead = list.head;
+    list.head = currentHead.next;
+    return currentHead.value;
   };
 
   list.contains = function(target){
@@ -52,6 +43,18 @@ var LinkedList = function(){
 
   return list;
 };
+
+var Node = function(value){
+  var node = {};
+
+  node.value = value;
+  node.next = null;
+
+  return node;
+};
+
+
+
 
 // time complexity = O(n)
 

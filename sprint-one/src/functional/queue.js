@@ -16,8 +16,9 @@ var Queue = function(){
     if (length > shiftRightBy) {
       shiftRightBy++;
     }
-    return storage[shiftRightBy - 1]; //returns 'a' a second time, instead of undefined. for queue.enqueue('a'); queue.dequeue(); queue.dequeue();
-
+    var result = storage[shiftRightBy - 1];
+    delete storage[shiftRightBy - 1];
+    return result;
   };
 
   someInstance.size = function(){

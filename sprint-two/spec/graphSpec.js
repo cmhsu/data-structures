@@ -32,8 +32,10 @@ describe('graph', function() {
     graph.addNode('kittens');
     graph.addNode('penguins');
     graph.addEdge('penguins', 'puppies');
+    graph.addEdge('penguins', 'dontAdd');
     expect(graph.hasEdge('penguins', 'puppies')).to.equal(true);
     expect(graph.hasEdge('penguins', 'kittens')).to.equal(false);
+    expect(graph.hasEdge('penguins', 'dontAdd')).to.equal(false);
   });
 
   it('should remove edges between nodes', function() {
@@ -46,7 +48,6 @@ describe('graph', function() {
 
   it('should execute a callback on each node in the graph', function() {
     var connectToSatsumas = function(item) {
-      console.log(graph);
       graph.addEdge(item, 'satsumas');
     };
     graph.addNode('satsumas');

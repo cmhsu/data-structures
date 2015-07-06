@@ -1,87 +1,59 @@
-
-
 var Graph = function(){
-	this.nodes = [];
+	this.nodes = {};
 };
 
 Graph.prototype.addNode = function(node){
-	this.nodes.push({
-		value: node, 
-		pointers: []
-	});
-
+	if (node) {
+    if (this.nodes[node] === undefined) {
+      this.nodes[node] = {edges: []};
+    }
+  }
 };
 
 Graph.prototype.contains = function(node){
-	for (var i = 0; i < this.nodes.length; i++) {
-		if (this.nodes[i].value === node) {
-			return true;
-		}
-	}
-	return false;
+	return !!(this.nodes[node])
 };
 
 Graph.prototype.removeNode = function(node){
-	var numberOfNodes = this.nodes.length;
-	for (var i = 0; i < numberOfNodes; i++) {
-		if (this.nodes[i].value === node) {
-			this.nodes = this.nodes.slice(0, i).concat(this.nodes.slice(i + 1));
-		}
-	}
+	if (this.contains(node)) {
+    for (var i = 0; i < this.nodes[node].edges.length; i++) {
+      var currentEdgeNode = this.nodes[node].edges[i];
+      this.removeEdge(node, currentEdgeNode);
+    }
+  }
+  delete this.nodes[node];
 };
 
 Graph.prototype.hasEdge = function(fromNode, toNode){
-	for (var i = 0; i < this.nodes.length; i++) {
-		if (this.nodes[i].value === fromNode) {
-			var from = this.nodes[i];
-		}
-		if (this.nodes[i].value === toNode) {
-			var to = this.nodes[i];
-		}
-	}
-
-	if (from.pointers.indexOf(toNode) > -1) {
-		return true;
-	} else {
-		return false;
-	}
-
+	return this.nodes[fromNode].edges.indexOf(toNode) !== -1;
 };
 
 Graph.prototype.addEdge = function(fromNode, toNode){
-	for (var i = 0; i < this.nodes.length; i++) {
-		if (this.nodes[i].value === fromNode) {
-			var from = this.nodes[i];
-		}
-		if (this.nodes[i].value === toNode) {
-			var to = this.nodes[i];
-		}
-	}
-
-	from.pointers.push(toNode);
-	to.pointers.push(fromNode);
+	if (this.contains(fromNode) && this.contains(toNode)) {
+    if (this.nodes[fromNode].edges.indexOf(toNode) === -1) {
+      this.nodes[fromNode].edges.push(toNode);
+    }
+    if (this.nodes[toNode].edges.indexOf(fromNode) === -1) {
+      this.nodes[toNode].edges.push(fromNode);
+    }
+  }
 };
 
 Graph.prototype.removeEdge = function(fromNode, toNode){
-	for (var i = 0; i < this.nodes.length; i++) {
-		if (this.nodes[i].value === fromNode) {
-			var from = this.nodes[i];
-		}
-		if (this.nodes[i].value === toNode) {
-			var to = this.nodes[i];
-		}
-	}
-	var fromIndex = from.pointers.indexOf(toNode);
-	from.pointers = from.pointers.slice(0, fromIndex).concat(from.pointers.slice(fromIndex + 1));
-
-	var toIndex = to.pointers.indexOf(fromNode);
-	to.pointers = to.pointers.slice(0, toIndex).concat(to.pointers.slice(toIndex + 1));
+  var spliceIndex = this.nodes[fromNode].edges.indexOf(toNode);
+	if (spliceIndex >= 0) {
+    this.nodes[fromNode].edges.splice(spliceIndex, 1);
+  }
+  spliceIndex = this.nodes[toNode].edges.indexOf(fromNode);
+  if (spliceIndex >= 0) {
+    this.nodes[toNode].edges.splice(spliceIndex, 1);
+  }
 };
 
 Graph.prototype.forEachNode = function(cb){
-	for (var i = 0; i < this.nodes.length; i++) {
-		cb(this.nodes[i].value);
-	}
+	for (var nodeKey in this.nodes) {
+    cb(nodeKey);
+  }
 };
 
 // 

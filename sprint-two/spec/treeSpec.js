@@ -2,7 +2,7 @@ describe('tree', function() {
   var tree;
 
   beforeEach(function() {
-    tree = Tree();
+    tree = Tree(3);
   });
 
   it('should have methods named "addChild" and "contains", and a property named "value"', function() {
@@ -40,5 +40,30 @@ describe('tree', function() {
     expect(tree.contains(7)).to.equal(true);
     expect(tree.contains(8)).to.equal(true);
   });
+
+  it('should have a parent property and remove a tree parent in both directions', function() {
+    tree.addChild(5);
+    tree.children[0].addChild(6);
+    expect(tree.children[0].children[0].parent.value).to.equal(5);
+    expect(tree.children[0].children[0].value).to.equal(6);
+    var removed = tree.children[0].children[0].removeFromParent();
+    expect(tree.contains(6)).to.equal(false);
+    expect(tree.contains(5)).to.equal(true);
+    expect(removed.parent).to.equal(null);
+  });
+
+  it('should have a traverse method that calls a function on every node value', function() {
+    var count = 0;
+    tree.addChild(5);
+    tree.children[0].addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[0].children[0].addChild(8);
+    var func = function(value) {
+      count += value;
+    };
+    tree.traverse(func);
+    expect(count).to.equal(29);
+  });
+
 
 });

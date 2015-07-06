@@ -8,11 +8,11 @@ define(['../../lib/chai/chai.js', '../../lib/underscore/underscore.js'], functio
       };
 
       if(!patternIs(
-        'functional',
-        'functional-shared',
-        'prototypal',
-        'pseudoclassical'
-      )){
+          'functional',
+          'functional-shared',
+          'prototypal',
+          'pseudoclassical'
+        )){
         throw new Error('Unrecognized class pattern');
       }
 
@@ -47,9 +47,9 @@ define(['../../lib/chai/chai.js', '../../lib/underscore/underscore.js'], functio
 
       prototypeOfInstances = (
         patternIs('functional') ? Object.prototype :
-        patternIs('functional-shared') ? Object.prototype :
-        patternIs('pseudoclassical') ? constructor.prototype :
-        prototypeOfInstances
+          patternIs('functional-shared') ? Object.prototype :
+            patternIs('pseudoclassical') ? constructor.prototype :
+              prototypeOfInstances
       );
 
       var constructionArgs = option('constructionArgs') || [];
@@ -114,7 +114,7 @@ define(['../../lib/chai/chai.js', '../../lib/underscore/underscore.js'], functio
 
         var referencesThis = requireOption('referencesThis');
         it(might('reference the keyword this', referencesThis), function(){
-          assuming(referencesThis).expect(/^((?!\/\/).)*(this)/.test(constructor)).to.be.true;
+          assuming(referencesThis).expect(/^((?!\/\/).)*(this)/m.test(constructor)).to.be.true;
         });
 
         var referencesReturn = requireOption('referencesReturn');

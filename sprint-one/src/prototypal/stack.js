@@ -4,6 +4,7 @@ var Stack = function() {
   var newStack = Object.create(stackMethods);
 
   newStack.length = 0;
+  newStack.storage = {};
 
   return newStack;
 };
@@ -11,7 +12,7 @@ var Stack = function() {
 var stackMethods = {};
 
 stackMethods.push = function(value) {
-	this[this.length] = value;
+	this.storage[this.length] = value;
 	this.length++;
 };
 
@@ -19,7 +20,9 @@ stackMethods.pop = function() {
 	if (this.length >= 1) {
 		this.length--;
 	}
-	return this[this.length];
+	var result = this.storage[this.length];
+  delete this.storage[this.length];
+  return result;
 };
 
 stackMethods.size =function() {
