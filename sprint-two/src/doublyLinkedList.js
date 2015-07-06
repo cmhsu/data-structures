@@ -4,76 +4,63 @@ var DoublyLinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(value){
-    var item = { 
-      value: value,
-      next: null,
-      prev: null
-    };
+    var newTail = Node(value);
 
-    if (list.head === null) {
-      list.head = item;
-      list.tail = item;
-      return;
+    if (!list.head) {
+      list.head = newTail;
     }
 
-    item.prev = list.head;
-    list.tail.next = item;
-    list.tail = item; 
-  };  
-
-  list.addToHead = function(value){
-    var item = { 
-      value: value,
-      next: null,
-      prev: null
-    };
-
-    if (list.head === null) {
-      list.head = item;
-      list.tail = item;
-      return;
+    if (list.tail) {
+      list.tail.next = newTail;
+      newTail.prev = list.tail;
     }
 
-    item.next = list.head;
-    list.head.prev = item;
-    list.head = item; 
-  }; 
+    list.tail = newTail;
+  };
 
-  list.removeHead = function(){
+  list.addToHead = function(value) {
+    var newHead = Node(value);
+
+    if (!list.tail) {
+      list.tail = newHead;
+    }
+
+    if (list.head) {
+      list.head.prev = newHead;
+      newHead.next = list.head;
+    }
+
+    list.head = newHead;
+  };
+
+  list.removeHead = function() {
     if (list.head === null) {
       return null;
     }
 
-    var result = list.head.value;
-
-    if (list.head.next === null) {
+    var currentHead = list.head;
+    list.head = currentHead.next;
+    if (list.head) {
+      list.head.prev = null;
+    } else {
       list.tail = null;
-      list.head = null;
-      return result;
     }
-    
-    list.head = list.head.next;
-    list.head.prev = null;
-    return result;
+    return currentHead.value;
   };
 
-  list.removeTail = function(){
+  list.removeTail = function() {
     if (list.tail === null) {
       return null;
     }
 
-    var result = list.tail.value;
-
-    if (list.tail.prev === null) {
-      list.tail = null;
+    var currentTail = list.tail;
+    list.tail = currentTail.prev;
+    if (list.tail) {
+      list.tail.next = null;
+    } else {
       list.head = null;
-      return result;
     }
-
-    list.tail = list.tail.prev;
-    list.tail.next = null;
-    return result;
-
+    return currentTail.value;
   };
 
   list.contains = function(target){
@@ -91,6 +78,16 @@ var DoublyLinkedList = function(){
   };
 
   return list;
+};
+
+var Node = function(value){
+  var node = {};
+
+  node.value = value;
+  node.next = null;
+  node.prev = null;
+
+  return node;
 };
 
 // time complexity = O(n)

@@ -4,6 +4,8 @@ var BinarySearchTree = function(value){
 	tree.value = value;
 	tree.left;
 	tree.right;
+  tree.maxDepth = 2;
+  tree.minDepth = 1;
 	
 	tree.insert = function(value) {
 		if (value < this.value) {
@@ -68,7 +70,6 @@ var BinarySearchTree = function(value){
       }
     };
     traverseNodes(this);
-    console.log(nodes);
     for (var i = 0; i < nodes.length; i++) {
       func(nodes[i].value);
     }
