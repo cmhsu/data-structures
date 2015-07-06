@@ -3,7 +3,7 @@ var BinarySearchTree = function(value){
 
 	tree.value = value;
 	tree.left;
-	tree.right;
+  tree.right;
   tree.maxDepth = 2;
   tree.minDepth = 1;
 	
